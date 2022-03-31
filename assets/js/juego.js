@@ -5,6 +5,14 @@ const especiales = ["A", "J", "Q", "K"];
 let puntosJugador = 0;
 let puntosComputadora = 0;
 
+const btnNuevo = document.querySelector("#btnNuevo");
+const btnPedir = document.querySelector("#btnPedir");
+const btnDetener = document.querySelector("#btnDetener");
+
+const puntosHTML = document.querySelectorAll("small");
+const divCartasJugador = document.querySelector("#jugador-cartas");
+const divCartasComputadora = document.querySelector("#computadora-cartas");
+
 const crearDeck = () => {
   for (let i = 2; i <= 10; i++) {
     for (let tipo of tipos) {
@@ -24,7 +32,6 @@ const crearDeck = () => {
 crearDeck();
 
 // Funcion para crear carta
-
 const pedirCarta = () => {
   if (deck.length === 0) {
     // Throw es para ejecutar algo cuando se cumple la condicion
@@ -38,12 +45,10 @@ const pedirCarta = () => {
 const valorCarta = (carta) => {
   // Para que nunca se ejecute cuando no queden cartas en nuestro desk
   const valor = carta.substring(0, carta.length - 1);
-
   return isNaN(valor) ? (valor === "A" ? 11 : 10) : valor * 1;
 };
 
 // Turno de la computadora
-
 const turnoComputadora = (puntosMinimos) => {
   do {
     const carta = pedirCarta();
@@ -60,17 +65,20 @@ const turnoComputadora = (puntosMinimos) => {
       break;
     }
   } while (puntosComputadora < puntosMinimos && puntosMinimos <= 21);
+  setTimeout(() => {
+    if (puntosComputadora === puntosMinimos) {
+      alert("Nadie gana :(");
+    } else if (puntosMinimos > 21) {
+      alert("Computadora gana");
+    } else if (puntosComputadora > 21) {
+      alert("Jugador Gana");
+    } else {
+      alert("Computadora Gana");
+    }
+  }, 100);
 };
 
 // EVENTOS
-
-const btnNuevo = document.querySelector("#btnNuevo");
-const btnPedir = document.querySelector("#btnPedir");
-const btnDetener = document.querySelector("#btnDetener");
-
-const puntosHTML = document.querySelectorAll("small");
-const divCartasJugador = document.querySelector("#jugador-cartas");
-const divCartasComputadora = document.querySelector("#computadora-cartas");
 
 btnPedir.addEventListener("click", () => {
   const carta = pedirCarta();
