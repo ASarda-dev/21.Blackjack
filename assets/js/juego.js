@@ -2,6 +2,9 @@ let deck = [];
 const tipos = ["C", "D", "H", "S"];
 const especiales = ["A", "J", "Q", "K"];
 
+let puntosJugador = 0;
+let puntosComputadora = 0;
+
 const crearDeck = () => {
   for (let i = 2; i <= 10; i++) {
     for (let tipo of tipos) {
@@ -14,7 +17,7 @@ const crearDeck = () => {
       deck.push(esp + tipo);
     }
   }
-  console.log(deck);
+  // console.log(deck);
   deck = _.shuffle(deck);
   return deck;
 };
@@ -27,16 +30,13 @@ const pedirCarta = () => {
     // Throw es para ejecutar algo cuando se cumple la condicion
     throw "No hay cartas en el deck";
   }
-
   const carta = deck.pop();
 
-  console.log(deck);
-  console.log(carta);
+  // console.log(deck);
+  // console.log(carta);
   return carta;
 };
 // pedirCarta()
-
-// TODO VALOR CARTA VIDEO 51.VALOR DE CADA CARTA
 
 // const valorCarta = (carta) => {
 //   // Para que nunca se ejecute cuando no queden cartas en nuestro desk
@@ -59,6 +59,25 @@ const valorCarta = (carta) => {
   return isNaN(valor) ? (valor === "A" ? 11 : 10) : valor * 1;
 };
 
-const valor = valorCarta(pedirCarta());
+// const valor = valorCarta(pedirCarta());
 
-console.log(valor);
+// console.log(valor);
+
+// EVENTOS
+
+const btnNuevo = document.querySelector("#btnNuevo");
+const btnPedir = document.querySelector("#btnPedir");
+const btnDetener = document.querySelector("#btnDetener");
+
+const puntosHTML = document.querySelectorAll("small");
+
+btnPedir.addEventListener("click", () => {
+  const carta = pedirCarta();
+
+  puntosJugador = puntosJugador + valorCarta(carta);
+
+  puntosHTML[0].innerText = puntosJugador;
+
+  console.log(carta);
+  console.log(puntosJugador);
+});
