@@ -14,11 +14,8 @@ const crearDeck = () => {
       deck.push(esp + tipo);
     }
   }
-
   console.log(deck);
-
   deck = _.shuffle(deck);
-  // console.log(deck);
   return deck;
 };
 crearDeck();
@@ -27,6 +24,7 @@ crearDeck();
 
 const pedirCarta = () => {
   if (deck.length === 0) {
+    // Throw es para ejecutar algo cuando se cumple la condicion
     throw "No hay cartas en el deck";
   }
 
@@ -36,21 +34,31 @@ const pedirCarta = () => {
   console.log(carta);
   return carta;
 };
-
 // pedirCarta()
+
 // TODO VALOR CARTA VIDEO 51.VALOR DE CADA CARTA
 
-const valorCarta = (carta) => {
-  const valor = carta.substring(0, carta.length - 1);
-  let puntos = 0;
+// const valorCarta = (carta) => {
+//   // Para que nunca se ejecute cuando no queden cartas en nuestro desk
+//   const valor = carta.substring(0, carta.length - 1);
+//   let puntos = 0;
 
-  if (isNaN(valor)) {
-    console.log("No es un numero");
-  } else {
-    console.log("Es un numero");
-    puntos = valor * 1;
-  }
-  console.log(puntos);
+//   if (isNaN(valor)) {
+//     puntos = valor === "A" ? 11 : 10;
+//   } else {
+//     puntos = valor * 1;
+//   }
+//   console.log(puntos);
+// };
+
+// FORMA MAS RESUMIDA DE EJECUTAR LA FUNCION VALOR CARTA
+const valorCarta = (carta) => {
+  // Para que nunca se ejecute cuando no queden cartas en nuestro desk
+  const valor = carta.substring(0, carta.length - 1);
+
+  return isNaN(valor) ? (valor === "A" ? 11 : 10) : valor * 1;
 };
 
-valorCarta("2D");
+const valor = valorCarta(pedirCarta());
+
+console.log(valor);
