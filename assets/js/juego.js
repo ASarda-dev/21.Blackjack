@@ -17,7 +17,7 @@ const crearDeck = () => {
       deck.push(esp + tipo);
     }
   }
-  // console.log(deck);
+  console.log(deck);
   deck = _.shuffle(deck);
   return deck;
 };
@@ -31,27 +31,10 @@ const pedirCarta = () => {
     throw "No hay cartas en el deck";
   }
   const carta = deck.pop();
-
-  // console.log(deck);
-  // console.log(carta);
   return carta;
 };
-// pedirCarta()
 
-// const valorCarta = (carta) => {
-//   // Para que nunca se ejecute cuando no queden cartas en nuestro desk
-//   const valor = carta.substring(0, carta.length - 1);
-//   let puntos = 0;
-
-//   if (isNaN(valor)) {
-//     puntos = valor === "A" ? 11 : 10;
-//   } else {
-//     puntos = valor * 1;
-//   }
-//   console.log(puntos);
-// };
-
-// FORMA MAS RESUMIDA DE EJECUTAR LA FUNCION VALOR CARTA
+//  FUNCION VALOR CARTA
 const valorCarta = (carta) => {
   // Para que nunca se ejecute cuando no queden cartas en nuestro desk
   const valor = carta.substring(0, carta.length - 1);
@@ -59,9 +42,25 @@ const valorCarta = (carta) => {
   return isNaN(valor) ? (valor === "A" ? 11 : 10) : valor * 1;
 };
 
-// const valor = valorCarta(pedirCarta());
+// Turno de la computadora
 
-// console.log(valor);
+const turnoComputadora = (puntosMinimos) => {
+  do {
+    const carta = pedirCarta();
+
+    puntosComputadora = puntosComputadora + valorCarta(carta);
+    puntosHTML[1].innerText = puntosComputadora;
+
+    const imgCarta = document.createElement("img");
+    imgCarta.src = `assets/cartas/${carta}.png`;
+    imgCarta.classList.add("carta");
+    divCartasComputadora.append(imgCarta);
+
+    if (puntosMinimos > 21) {
+      break;
+    }
+  } while (puntosComputadora < puntosMinimos && puntosMinimos <= 21);
+};
 
 // EVENTOS
 
@@ -88,8 +87,19 @@ btnPedir.addEventListener("click", () => {
   if (puntosJugador > 21) {
     console.warn("Lo siento mucho, perdíste");
     btnPedir.disabled = true;
+    btnDetener.disabled = true;
+    turnoComputadora(puntosJugador);
   } else if (puntosJugador === 21) {
     console.warn("21 Genial ");
     btnPedir.disabled = true;
+    btnDetener.disabled = true;
+    turnoComputadora(puntosJugador);
   }
+});
+
+btnDetener.addEventListener("click", () => {
+  btnPedir.disabled = true;
+  btnDetener.disabled = true;
+
+  turnoComputadora(puntosJugador);
 });
