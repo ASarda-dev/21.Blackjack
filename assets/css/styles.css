@@ -1,10 +1,11 @@
-html,body{
+html, body {
     margin: 0px;
-    background-color: #2f4f30;
+    background-color: #2F4F30;
     color: white;
 }
 
-.titulo{
+
+.titulo {
     text-align: center;
     background-color: black;
     color: white;
@@ -13,12 +14,12 @@ html,body{
 }
 
 .carta {
-    width: 150px;
     position: relative;
+    width: 150px;
     left: 100px;
     margin-left: -75px;
 }
 
 #computadora-cartas, #jugador-cartas {
-    height: 240px; 
+    height: 240px;
 }
